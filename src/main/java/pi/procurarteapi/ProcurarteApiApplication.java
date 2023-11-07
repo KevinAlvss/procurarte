@@ -11,7 +11,6 @@ public class ProcurarteApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProcurarteApiApplication.class, args);
-		//CommitTest
 	}
 
 }
