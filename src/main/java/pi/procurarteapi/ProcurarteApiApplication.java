@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+// arquivo principal do projeto
+
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @EnableMongoRepositories
 public class ProcurarteApiApplication {
