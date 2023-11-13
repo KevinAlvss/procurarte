@@ -1,30 +1,29 @@
 package pi.procurarteapi.app.musician.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pi.procurarteapi.app.musician.dtos.ListMusicianResponseDto;
+import pi.procurarteapi.app.musician.dtos.ShowMusicianResponseDto;
+import pi.procurarteapi.app.musician.dtos.ShowMusicianRequestDto;
 import pi.procurarteapi.infra.entities.Musician;
 import pi.procurarteapi.infra.repositories.IMusicianRepository;
 
 @Service
-public class ListMusicianService {
-    
+public class ShowMusicianService {
+
     @Autowired
     private IMusicianRepository musicianRepository;
 
-    public ListMusicianService(IMusicianRepository musicianRepository) {
+    public ShowMusicianService(IMusicianRepository musicianRepository) {
         this.musicianRepository = musicianRepository;
     }
 
-    public ListMusicianResponseDto execute() throws Exception {
+    public ShowMusicianResponseDto execute(ShowMusicianRequestDto request) throws Exception {
         try {
 
-            List<Musician> musicians = musicianRepository.findAll();
+            Musician musician = musicianRepository.findById(request.getId()).orElseThrow(() -> new Exception("Musician Not Found"));
 
-            ListMusicianResponseDto response = new ListMusicianResponseDto(musicians);
+            ShowMusicianResponseDto response = new ShowMusicianResponseDto(musician);
 
             return response;
 
