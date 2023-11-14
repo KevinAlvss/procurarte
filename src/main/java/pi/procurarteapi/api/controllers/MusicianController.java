@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import pi.procurarteapi.app.musician.dtos.ListMusicianImagesRequestDto;
+import pi.procurarteapi.app.musician.dtos.ListMusicianImagesResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianResponseDto;
+import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 
@@ -27,6 +30,9 @@ public class MusicianController {
 
     @Autowired
     private ShowMusicianService showMusicianService;
+
+    @Autowired
+    private ListMusicianImagesService listMusicianImagesService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -46,6 +52,19 @@ public class MusicianController {
         try {
             
             ShowMusicianResponseDto response = showMusicianService.execute(new ShowMusicianRequestDto(id));
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("{id}/images")
+    public ResponseEntity<?> listImages(@PathVariable String id) throws Exception {
+        try {
+            
+            ListMusicianImagesResponseDto response = listMusicianImagesService.execute(new ListMusicianImagesRequestDto(id));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
