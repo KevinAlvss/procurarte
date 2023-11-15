@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
+import pi.procurarteapi.app.musician.interfaces.IListMusicianService;
 import pi.procurarteapi.infra.entities.Musician;
 import pi.procurarteapi.infra.repositories.IMusicianRepository;
 
 @Service
-public class ListMusicianService {
-    
+public class ListMusicianService implements IListMusicianService {
+
     @Autowired
     private IMusicianRepository musicianRepository;
 
@@ -19,6 +20,7 @@ public class ListMusicianService {
         this.musicianRepository = musicianRepository;
     }
 
+    @Override
     public ListMusicianResponseDto execute() throws Exception {
         try {
 

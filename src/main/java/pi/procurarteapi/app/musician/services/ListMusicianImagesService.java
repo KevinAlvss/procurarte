@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
+import pi.procurarteapi.app.musician.interfaces.IListMusicianImagesService;
 import pi.procurarteapi.infra.entities.Musician;
 import pi.procurarteapi.infra.repositories.IMusicianRepository;
 
 @Service
-public class ListMusicianImagesService {
-    
+public class ListMusicianImagesService implements IListMusicianImagesService {
+
     @Autowired
     private IMusicianRepository musicianRepository;
 
@@ -18,10 +19,12 @@ public class ListMusicianImagesService {
         this.musicianRepository = musicianRepository;
     }
 
+    @Override
     public ListMusicianImagesResponseDto execute(ListMusicianImagesRequestDto request) throws Exception {
         try {
-            
-            Musician musician = musicianRepository.findById(request.getId()).orElseThrow(() -> new Exception("Musician Not Found"));
+
+            Musician musician = musicianRepository.findById(request.getId())
+                    .orElseThrow(() -> new Exception("Musician Not Found"));
 
             ListMusicianImagesResponseDto response = new ListMusicianImagesResponseDto();
             response.setImages(musician.getPortfolio().getMedia());
