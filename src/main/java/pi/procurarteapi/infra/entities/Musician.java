@@ -18,19 +18,77 @@ public class Musician {
     private Address address;
     private Portfolio portfolio;
 
-    public Musician(String id, String email, String password, String name, String phoneNumber,
-            String instagramProfile, Address address, Portfolio portfolio) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.instagramProfile = instagramProfile;
-        this.address = address;
-        this.portfolio = portfolio;
+    private Musician(Builder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.name = builder.name;
+        this.phoneNumber = builder.phoneNumber;
+        this.instagramProfile = builder.instagramProfile;
+        this.address = builder.address;
+        this.portfolio = builder.portfolio;
     }
 
-    // Getters and setters for the new fields
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String id;
+        private String email;
+        private String password;
+        private String name;
+        private String phoneNumber;
+        private String instagramProfile;
+        private Address address;
+        private Portfolio portfolio;
+
+        private Builder() {}
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder instagramProfile(String instagramProfile) {
+            this.instagramProfile = instagramProfile;
+            return this;
+        }
+
+        public Builder address(Address address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder portfolio(Portfolio portfolio) {
+            this.portfolio = portfolio;
+            return this;
+        }
+
+        public Musician build() {
+            return new Musician(this);
+        }
+    }
 
     public String getId() {
         return id;
