@@ -1,4 +1,4 @@
-package pi.procurarteapi.app.musician.dtos;
+package pi.procurarteapi.app.musician.dtos.ShowMusician;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

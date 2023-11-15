@@ -1,4 +1,4 @@
-package pi.procurarteapi.app.musician.dtos;
+package pi.procurarteapi.app.musician.dtos.ShowMusician;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShowMusicianPortfolioRequestDto {
+public class ShowMusicianRequestDto {
     private String id;
-
 }

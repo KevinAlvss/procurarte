@@ -1,4 +1,4 @@
-package pi.procurarteapi.app.musician.dtos;
+package pi.procurarteapi.app.musician.dtos.ListMusician;
 
 import java.util.List;
 
