@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,10 +19,14 @@ import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioResponseDto;
+import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
+import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
 
 @RestController
 @CrossOrigin("*")
@@ -39,6 +45,9 @@ public class MusicianController {
 
     @Autowired
     private ShowMusicianPortfolioService showMusicianPortfolioService;
+
+    @Autowired
+    private UpdatePortfolioService updatePortfolioService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -84,6 +93,19 @@ public class MusicianController {
         try {
             
             ShowMusicianPortfolioResponseDto response = showMusicianPortfolioService.execute(new ShowMusicianPortfolioRequestDto(id));
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}/portfolio")
+    public ResponseEntity<?> updatePortfolio(@PathVariable String id, @RequestBody PortfolioRequestDto portfolio) throws Exception {
+        try {
+            
+            UpdatePortfolioResponseDto response = updatePortfolioService.execute(new UpdatePortfolioRequestDto(id, portfolio));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
