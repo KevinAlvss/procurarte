@@ -19,6 +19,8 @@ import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioResponseDto;
+import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkRequestDto;
+import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkResponseDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
@@ -26,6 +28,7 @@ import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
+import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
 import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
 
 @RestController
@@ -48,6 +51,9 @@ public class MusicianController {
 
     @Autowired
     private UpdatePortfolioService updatePortfolioService;
+
+    @Autowired
+    private ShowWhatsappLinkService showWhatsappLinkService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -106,6 +112,19 @@ public class MusicianController {
         try {
             
             UpdatePortfolioResponseDto response = updatePortfolioService.execute(new UpdatePortfolioRequestDto(id, portfolio));
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("{id}/whatsapp")
+    public ResponseEntity<?> showWhatsappLink(@PathVariable String id) throws Exception {
+        try {
+            
+            ShowWhatsappLinkResponseDto response = showWhatsappLinkService.execute(new ShowWhatsappLinkRequestDto(id));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
