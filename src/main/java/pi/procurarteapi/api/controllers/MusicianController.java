@@ -13,10 +13,13 @@ import io.swagger.annotations.Api;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImagesResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianResponseDto;
+import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
+import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 
 @RestController
@@ -33,6 +36,9 @@ public class MusicianController {
 
     @Autowired
     private ListMusicianImagesService listMusicianImagesService;
+
+    @Autowired
+    private ShowMusicianPortfolioService showMusicianPortfolioService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -65,6 +71,19 @@ public class MusicianController {
         try {
             
             ListMusicianImagesResponseDto response = listMusicianImagesService.execute(new ListMusicianImagesRequestDto(id));
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("{id}/portfolio")
+    public ResponseEntity<?> showPortfolio(@PathVariable String id) throws Exception {
+        try {
+            
+            ShowMusicianPortfolioResponseDto response = showMusicianPortfolioService.execute(new ShowMusicianPortfolioRequestDto(id));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
