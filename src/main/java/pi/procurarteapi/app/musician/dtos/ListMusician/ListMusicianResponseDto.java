@@ -1,4 +1,6 @@
-package pi.procurarteapi.app.musician.dtos;
+package pi.procurarteapi.app.musician.dtos.ListMusician;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,10 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pi.procurarteapi.infra.entities.Musician;
 
-@Setter 
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShowMusicianResponseDto {
-    private Musician musician;
+public class ListMusicianResponseDto {
+    private List<Musician> musicians;
 }
