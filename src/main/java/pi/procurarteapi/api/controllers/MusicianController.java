@@ -21,7 +21,7 @@ import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPort
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkResponseDto;
-import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateInstrumentRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateInstrumentListRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsResponseDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
@@ -141,7 +141,7 @@ public class MusicianController {
     }
 
     @PutMapping("{id}/instrument")
-    public ResponseEntity<?> updateMusicianInstruments(@PathVariable String id, @RequestBody UpdateInstrumentRequestDto instrumentName) throws Exception {
+    public ResponseEntity<?> updateMusicianInstruments(@PathVariable String id, @RequestBody UpdateInstrumentListRequestDto instrumentName) throws Exception {
         try {
             
             UpdateMusicianInstrumentsResponseDto response = updateMusicianInstrumentsService.execute(new UpdateMusicianInstrumentsRequestDto(id, instrumentName));

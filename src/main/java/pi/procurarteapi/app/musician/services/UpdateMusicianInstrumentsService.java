@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateInstrumentRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsResponseDto;
 import pi.procurarteapi.app.musician.interfaces.IUpdateMusicianInstrumentsService;
@@ -36,13 +37,9 @@ public class UpdateMusicianInstrumentsService implements IUpdateMusicianInstrume
             Musician musician = musicianRepository.findById(request.getMusicianId())
                     .orElseThrow(() -> new Exception("Musician Not Found"));
 
-            Instrument instrument = instrumentRepository.findByName(request.getInstrument().getName());
+            List<Instrument> instruments = validateInstruments(request.getInstrumentList().getInstruments());
 
-            if (instrument == null) {
-                throw new Exception("Instrument not found");
-            }
-
-            addInstrumentInMusician(musician, instrument);
+            musician.setInstruments(instruments);
 
             Musician updatedMusician = musicianRepository.save(musician);
 
@@ -55,22 +52,25 @@ public class UpdateMusicianInstrumentsService implements IUpdateMusicianInstrume
         }
     }
 
-    private void addInstrumentInMusician(Musician musician, Instrument instrument) throws Exception {
-        List<Instrument> musicianInstruments = musician.getInstruments();
-
-        if(musicianInstruments == null) {
-            musician.setInstruments(new ArrayList<Instrument>());
-        }
-
-        musicianInstruments = musician.getInstruments();
-
-        for(Instrument i: musicianInstruments){
-            if(i.getId().equals(instrument.getId())){
-                throw new Exception("Musician already has this instrument");
+    private List<Instrument> validateInstruments(List<UpdateInstrumentRequestDto> instruments) throws Exception {
+        List<Instrument> response = new ArrayList<>();
+        
+        for(UpdateInstrumentRequestDto instrument: instruments){
+            
+            Instrument databaseInstrument = instrumentRepository.findByName(instrument.getName());
+            
+            if (databaseInstrument == null) {
+                throw new Exception("Instrument not found");
             }
+
+            if (response.contains(databaseInstrument)){
+                continue;
+            }
+
+            response.add(databaseInstrument);
         }
 
-        musicianInstruments.add(instrument);
+        return response;
     }
 
 }

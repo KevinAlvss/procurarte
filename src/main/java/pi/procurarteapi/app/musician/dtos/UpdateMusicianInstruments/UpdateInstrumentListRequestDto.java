@@ -1,5 +1,7 @@
 package pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateMusicianInstrumentsRequestDto {
-    private String musicianId;
-    private UpdateInstrumentListRequestDto instrumentList;
+public class UpdateInstrumentListRequestDto {
+    private List<UpdateInstrumentRequestDto> instruments;
 }
