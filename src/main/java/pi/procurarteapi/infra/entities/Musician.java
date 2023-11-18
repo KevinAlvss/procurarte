@@ -22,8 +22,11 @@ public class Musician {
     @DBRef
     private List<Instrument> instruments;
 
+    @DBRef
+    private List<MusicStyle> musicStyles;
+
     public Musician(String id, String email, String password, String name, String phoneNumber,
-            String instagramProfile, Address address, Portfolio portfolio, List<Instrument> instruments) {
+            String instagramProfile, Address address, Portfolio portfolio, List<Instrument> instruments, List<MusicStyle> musicStyles) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -33,6 +36,7 @@ public class Musician {
         this.address = address;
         this.portfolio = portfolio;
         this.instruments = instruments;
+        this.musicStyles = musicStyles;
     }
 
     public String getId() {
@@ -102,6 +106,15 @@ public class Musician {
     public void setInstruments(List<Instrument> instruments) {
         this.instruments = instruments;
     }
+
+    public List<MusicStyle> getMusicStyles() {
+        return musicStyles;
+    }
+
+    public void setMusicStyles(List<MusicStyle> musicStyles) {
+        this.musicStyles = musicStyles;
+    }
+
 
     public static class Address {
         private String street;
