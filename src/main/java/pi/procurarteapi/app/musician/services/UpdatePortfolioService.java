@@ -26,11 +26,12 @@ public class UpdatePortfolioService implements IUpdatePortfolioService {
             Musician musician = musicianRepository.findById(request.getId())
                     .orElseThrow(() -> new Exception("Musician Not Found"));
 
-            Portfolio newPortfolio = new Portfolio();
-            newPortfolio.setMedia(request.getPortfolio().getMedia());
-            newPortfolio.setMusicianDescription(request.getPortfolio().getMusicianDescription());
-            newPortfolio.setProfilePhoto(request.getPortfolio().getProfilePhoto());
-            newPortfolio.setThumbnail(request.getPortfolio().getThumbnail());
+            Portfolio newPortfolio = new Portfolio.Builder()
+                    .media(request.getPortfolio().getMedia())
+                    .musicianDescription(request.getPortfolio().getMusicianDescription())
+                    .profilePhoto(request.getPortfolio().getProfilePhoto())
+                    .thumbnail(request.getPortfolio().getThumbnail())
+                    .build();
 
             musician.setPortfolio(newPortfolio);
 

@@ -157,36 +157,55 @@ public class Musician {
         private String thumbnail;
         private List<String> media;
 
-        public String getMusicianDescription() {
-            return musicianDescription;
+        private Portfolio() {
         }
 
-        public void setMusicianDescription(String musicianDescription) {
-            this.musicianDescription = musicianDescription;
+        public String getMusicianDescription() {
+            return musicianDescription;
         }
 
         public String getProfilePhoto() {
             return profilePhoto;
         }
 
-        public void setProfilePhoto(String profilePhoto) {
-            this.profilePhoto = profilePhoto;
-        }
-
         public String getThumbnail() {
             return thumbnail;
-        }
-
-        public void setThumbnail(String thumbnail) {
-            this.thumbnail = thumbnail;
         }
 
         public List<String> getMedia() {
             return media;
         }
 
-        public void setMedia(List<String> media) {
-            this.media = media;
+        public static class Builder {
+            private final Portfolio portfolio;
+    
+            public Builder() {
+                portfolio = new Portfolio();
+            }
+    
+            public Builder musicianDescription(String musicianDescription) {
+                portfolio.musicianDescription = musicianDescription;
+                return this;
+            }
+    
+            public Builder profilePhoto(String profilePhoto) {
+                portfolio.profilePhoto = profilePhoto;
+                return this;
+            }
+    
+            public Builder thumbnail(String thumbnail) {
+                portfolio.thumbnail = thumbnail;
+                return this;
+            }
+    
+            public Builder media(List<String> media) {
+                portfolio.media = media;
+                return this;
+            }
+    
+            public Portfolio build() {
+                return portfolio;
+            }
         }
 
     }
