@@ -3,6 +3,7 @@ package pi.procurarteapi.infra.entities;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("musicians")
@@ -18,8 +19,11 @@ public class Musician {
     private Address address;
     private Portfolio portfolio;
 
+    @DBRef
+    private List<Instrument> instruments;
+
     public Musician(String id, String email, String password, String name, String phoneNumber,
-            String instagramProfile, Address address, Portfolio portfolio) {
+            String instagramProfile, Address address, Portfolio portfolio, List<Instrument> instruments) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -28,9 +32,8 @@ public class Musician {
         this.instagramProfile = instagramProfile;
         this.address = address;
         this.portfolio = portfolio;
+        this.instruments = instruments;
     }
-
-    // Getters and setters for the new fields
 
     public String getId() {
         return id;
@@ -90,6 +93,14 @@ public class Musician {
 
     public void setPortfolio(Portfolio portfolio) {
         this.portfolio = portfolio;
+    }
+
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
     }
 
     public static class Address {

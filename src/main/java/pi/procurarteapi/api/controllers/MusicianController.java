@@ -21,6 +21,9 @@ import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPort
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowWhatsappLink.ShowWhatsappLinkResponseDto;
+import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateInstrumentRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusicianInstrumentsResponseDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
@@ -29,6 +32,7 @@ import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
+import pi.procurarteapi.app.musician.services.UpdateMusicianInstrumentsService;
 import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
 
 @RestController
@@ -54,6 +58,9 @@ public class MusicianController {
 
     @Autowired
     private ShowWhatsappLinkService showWhatsappLinkService;
+
+    @Autowired
+    private UpdateMusicianInstrumentsService updateMusicianInstrumentsService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -125,6 +132,19 @@ public class MusicianController {
         try {
             
             ShowWhatsappLinkResponseDto response = showWhatsappLinkService.execute(new ShowWhatsappLinkRequestDto(id));
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}/instrument")
+    public ResponseEntity<?> updateMusicianInstruments(@PathVariable String id, @RequestBody UpdateInstrumentRequestDto instrumentName) throws Exception {
+        try {
+            
+            UpdateMusicianInstrumentsResponseDto response = updateMusicianInstrumentsService.execute(new UpdateMusicianInstrumentsRequestDto(id, instrumentName));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
