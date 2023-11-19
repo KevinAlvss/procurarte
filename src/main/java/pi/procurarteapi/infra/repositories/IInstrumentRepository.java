@@ -4,4 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import pi.procurarteapi.infra.entities.Instrument;
 
-public interface IInstrumentRepository extends MongoRepository<Instrument, String> { }
+public interface IInstrumentRepository extends MongoRepository<Instrument, String> { 
+    Instrument findByName(String name);
+}

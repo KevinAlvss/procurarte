@@ -3,6 +3,7 @@ package pi.procurarteapi.infra.entities;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("musicians")
@@ -18,8 +19,14 @@ public class Musician {
     private Address address;
     private Portfolio portfolio;
 
+    @DBRef
+    private List<Instrument> instruments;
+
+    @DBRef
+    private List<MusicStyle> musicStyles;
+
     public Musician(String id, String email, String password, String name, String phoneNumber,
-            String instagramProfile, Address address, Portfolio portfolio) {
+            String instagramProfile, Address address, Portfolio portfolio, List<Instrument> instruments, List<MusicStyle> musicStyles) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -28,9 +35,9 @@ public class Musician {
         this.instagramProfile = instagramProfile;
         this.address = address;
         this.portfolio = portfolio;
+        this.instruments = instruments;
+        this.musicStyles = musicStyles;
     }
-
-    // Getters and setters for the new fields
 
     public String getId() {
         return id;
@@ -92,6 +99,23 @@ public class Musician {
         this.portfolio = portfolio;
     }
 
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
+    }
+
+    public List<MusicStyle> getMusicStyles() {
+        return musicStyles;
+    }
+
+    public void setMusicStyles(List<MusicStyle> musicStyles) {
+        this.musicStyles = musicStyles;
+    }
+
+
     public static class Address {
         private String street;
         private String state;
@@ -146,36 +170,55 @@ public class Musician {
         private String thumbnail;
         private List<String> media;
 
-        public String getMusicianDescription() {
-            return musicianDescription;
+        private Portfolio() {
         }
 
-        public void setMusicianDescription(String musicianDescription) {
-            this.musicianDescription = musicianDescription;
+        public String getMusicianDescription() {
+            return musicianDescription;
         }
 
         public String getProfilePhoto() {
             return profilePhoto;
         }
 
-        public void setProfilePhoto(String profilePhoto) {
-            this.profilePhoto = profilePhoto;
-        }
-
         public String getThumbnail() {
             return thumbnail;
-        }
-
-        public void setThumbnail(String thumbnail) {
-            this.thumbnail = thumbnail;
         }
 
         public List<String> getMedia() {
             return media;
         }
 
-        public void setMedia(List<String> media) {
-            this.media = media;
+        public static class Builder {
+            private final Portfolio portfolio;
+    
+            public Builder() {
+                portfolio = new Portfolio();
+            }
+    
+            public Builder musicianDescription(String musicianDescription) {
+                portfolio.musicianDescription = musicianDescription;
+                return this;
+            }
+    
+            public Builder profilePhoto(String profilePhoto) {
+                portfolio.profilePhoto = profilePhoto;
+                return this;
+            }
+    
+            public Builder thumbnail(String thumbnail) {
+                portfolio.thumbnail = thumbnail;
+                return this;
+            }
+    
+            public Builder media(List<String> media) {
+                portfolio.media = media;
+                return this;
+            }
+    
+            public Portfolio build() {
+                return portfolio;
+            }
         }
 
     }
