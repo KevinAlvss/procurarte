@@ -1,8 +1,8 @@
 package pi.procurarteapi.app.musician.interfaces;
 
 import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioRequestDto;
-import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolio;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioResponseDto;
 
 public interface IPostMusicianImagePortifolio {
-    public PostMusicianImagePortifolio execute(PostImagesPortifolioRequestDto images)throws Exception;   
+    public PostImagesPortifolioResponseDto execute(PostImagesPortifolioRequestDto images)throws Exception;   
 }
