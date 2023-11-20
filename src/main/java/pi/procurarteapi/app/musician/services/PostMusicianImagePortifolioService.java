@@ -26,7 +26,7 @@ public class PostMusicianImagePortifolioService implements IPostMusicianImagePor
                 .orElseThrow(() -> new Exception("Musician Not Found"));
 
                 Portfolio portfolio =  musician.getPortfolio();
-                portfolio.setMedia(request.getImages());
+                portfolio.setMedia(request.getImages().getImages());
                 musician.setPortfolio(portfolio);
 
                 Musician savedMusician = musicianRepository.save(musician);

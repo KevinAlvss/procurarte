@@ -1,7 +1,5 @@
 package pi.procurarteapi.api.controllers;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +15,7 @@ import io.swagger.annotations.Api;
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.ImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianRequestDto;
@@ -104,7 +103,7 @@ public class MusicianController {
     }
 
     @PostMapping("{id}/images")
-       public ResponseEntity<?> postImages(@PathVariable String id, @RequestBody ArrayList<String> images) throws Exception {
+       public ResponseEntity<?> postImages(@PathVariable String id, ImagesRequestDto images) throws Exception {
         try {
             
             PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images)) ; 
