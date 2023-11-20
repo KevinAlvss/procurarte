@@ -36,7 +36,7 @@ import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
-import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolio;
+import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
@@ -75,7 +75,7 @@ public class MusicianController {
     private UpdateMusicianMusicStylesServices updateMusicianMusicStylesServices;
 
     @Autowired
-    private PostMusicianImagePortifolio postMusicianImagePortifolio;
+    private PostMusicianImagePortifolioService postMusicianImagePortifolioService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -107,7 +107,7 @@ public class MusicianController {
        public ResponseEntity<?> postImages(@PathVariable String id, @RequestBody ArrayList<String> images) throws Exception {
         try {
             
-            PostImagesPortifolioResponseDto response = postMusicianImagePortifolio.execute(new PostImagesPortifolioRequestDto(id, images)) ; 
+            PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images)) ; 
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }catch(Exception e){
