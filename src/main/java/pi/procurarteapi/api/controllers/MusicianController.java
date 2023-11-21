@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.annotations.Api;
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
@@ -30,8 +31,8 @@ import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusici
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicStyleListRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicianMusicStylesRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicianMusicStylesResponseDto;
-import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
@@ -103,11 +104,10 @@ public class MusicianController {
     }
 
     @PostMapping("{id}/images")
-       public ResponseEntity<?> postImages(@PathVariable String id, ImagesRequestDto images) throws Exception {
+       public ResponseEntity<?> postImages(@PathVariable String id,@RequestBody ImagesRequestDto images) throws Exception {
         try {
-           //POst 
-            PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images)) ; 
-
+            
+            PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images));
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
