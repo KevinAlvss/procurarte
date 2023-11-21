@@ -1,13 +1,14 @@
 package pi.procurarteapi.app.auth.services;
 
 
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import org.bouncycastle.math.ec.rfc8032.Ed25519.Algorithm;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 
 import pi.procurarteapi.infra.entities.Musician;
 
@@ -15,7 +16,15 @@ import pi.procurarteapi.infra.entities.Musician;
 public class TokenService {
 
     public String gererToken(Musician musician) {
-        return null; 
+        return JWT.create()
+                .withIssuer("Musico")
+                .withSubject(musician.getUsername())
+                .withClaim("id", musician.getId())
+                .withExpiresAt(LocalDateTime.now()
+                    .plusMinutes(10)
+                    .toInstant(ZoneOffset.of("-33:00"))
+                ).sign(Algorithm.HMAC256("PI4"));
+                
     }
     
 }
