@@ -187,6 +187,10 @@ public class Musician {
 
         public List<String> getMedia() {
             return media;
+        } 
+        
+        public void setMedia(List<String> media) {
+            this.media = media;
         }
 
         public static class Builder {

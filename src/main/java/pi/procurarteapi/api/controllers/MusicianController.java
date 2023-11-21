@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import io.swagger.annotations.Api;
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.ImagesRequestDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioRequestDto;
@@ -27,11 +31,12 @@ import pi.procurarteapi.app.musician.dtos.UpdateMusicianInstruments.UpdateMusici
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicStyleListRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicianMusicStylesRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdateMusicianMusicStyles.UpdateMusicianMusicStylesResponseDto;
-import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
+import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
@@ -69,6 +74,9 @@ public class MusicianController {
     @Autowired
     private UpdateMusicianMusicStylesServices updateMusicianMusicStylesServices;
 
+    @Autowired
+    private PostMusicianImagePortifolioService postMusicianImagePortifolioService;
+
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
         try {
@@ -91,6 +99,17 @@ public class MusicianController {
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("{id}/images")
+       public ResponseEntity<?> postImages(@PathVariable String id,@RequestBody ImagesRequestDto images) throws Exception {
+        try {
+            
+            PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images));
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
