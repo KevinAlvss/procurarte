@@ -17,8 +17,8 @@ import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
 import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.ImagesRequestDto;
-import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioRequestDto;
-import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.PostImagesPortifolioResponseDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.UpdateImagesPortifolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.UpdateImagesPortifolioResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ShowMusicianPortfolio.ShowMusicianPortfolioRequestDto;
@@ -36,7 +36,7 @@ import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequest
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
-import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolioService;
+import pi.procurarteapi.app.musician.services.UpdateMusicianImagePortifolioService;
 import pi.procurarteapi.app.musician.services.PostMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
@@ -77,7 +77,7 @@ public class MusicianController {
     private UpdateMusicianMusicStylesServices updateMusicianMusicStylesServices;
 
     @Autowired
-    private PostMusicianImagePortifolioService postMusicianImagePortifolioService;
+    private UpdateMusicianImagePortifolioService updateMusicianImagePortifolioService;
 
     @Autowired
     private PostMusicianService postMusicianService;
@@ -120,12 +120,14 @@ public class MusicianController {
         }
     }
 
-    @PostMapping("{id}/images")
-       public ResponseEntity<?> postImages(@PathVariable String id,@RequestBody ImagesRequestDto images) throws Exception {
+    @PatchMapping("{id}/images")
+       public ResponseEntity<?> updateImages(@PathVariable String id, @RequestBody ImagesRequestDto images) throws Exception {
         try {
             
-            PostImagesPortifolioResponseDto response = postMusicianImagePortifolioService.execute(new PostImagesPortifolioRequestDto(id, images));
+            UpdateImagesPortifolioResponseDto response = updateMusicianImagePortifolioService.execute(new UpdateImagesPortifolioRequestDto(id, images));
+            
             return ResponseEntity.status(HttpStatus.OK).body(response);
+
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
