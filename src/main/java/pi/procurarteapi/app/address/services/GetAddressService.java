@@ -20,8 +20,6 @@ public class GetAddressService implements IGetAddressService{
 
     @Override
     public GetAddressResponseDto execute(GetAddressRequestDto request) throws Exception {
-
-        System.out.println(request.getCep());
         
         if(request.getCep() == null || request.getCep().trim() == "" ) {
             throw new Exception("CEP does not informed.");
