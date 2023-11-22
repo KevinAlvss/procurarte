@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
+
 @Document("musicians")
 public class Musician {
     @Id
@@ -115,7 +117,7 @@ public class Musician {
         this.musicStyles = musicStyles;
     }
 
-
+    @AllArgsConstructor
     public static class Address {
         private String street;
         private String state;
