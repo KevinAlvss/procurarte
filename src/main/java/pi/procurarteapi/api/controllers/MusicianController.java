@@ -37,12 +37,14 @@ import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRespons
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.PostMusicianImagePortifolioService;
+import pi.procurarteapi.app.musician.services.PostMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianInstrumentsService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianMusicStylesServices;
 import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
+import pi.procurarteapi.infra.entities.Musician;
 
 @RestController
 @CrossOrigin("*")
@@ -77,6 +79,9 @@ public class MusicianController {
     @Autowired
     private PostMusicianImagePortifolioService postMusicianImagePortifolioService;
 
+    @Autowired
+    private PostMusicianService postMusicianService;
+
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
         try {
@@ -97,6 +102,18 @@ public class MusicianController {
             ShowMusicianResponseDto response = showMusicianService.execute(new ShowMusicianRequestDto(id));
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> postMusician(@RequestBody Musician musician){ 
+        try {
+            
+                Musician newMusician = postMusicianService.execute(musician);
+                return ResponseEntity.status(HttpStatus.OK).body(newMusician);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
