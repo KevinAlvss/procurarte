@@ -1,4 +1,4 @@
-package pi.procurarteapi.MocyFactory.musician;
+package pi.procurarteapi.mockFactory.musician;
 
 import pi.procurarteapi.infra.entities.Musician;
 

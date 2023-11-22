@@ -1,7 +1,7 @@
-package pi.procurarteapi.MocyFactory.musician;
+package pi.procurarteapi.mockFactory.musician;
 
-import pi.procurarteapi.MocyFactory.musician.MusicianMockTypes.MusicianFail;
-import pi.procurarteapi.MocyFactory.musician.MusicianMockTypes.MusicianOk;
+import pi.procurarteapi.mockFactory.musician.musicianMockTypes.MusicianFail;
+import pi.procurarteapi.mockFactory.musician.musicianMockTypes.MusicianOk;
 
 public class MusicianFactory {
    

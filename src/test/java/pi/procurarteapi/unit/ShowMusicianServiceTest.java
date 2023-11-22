@@ -1,4 +1,4 @@
-package pi.procurarteapi;
+package pi.procurarteapi.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,10 +11,10 @@ import pi.procurarteapi.app.musician.dtos.ShowMusician.ShowMusicianResponseDto;
 import pi.procurarteapi.app.musician.services.PostMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.infra.entities.Musician;
-import pi.procurarteapi.infra.entities.Musician.Address;
+import pi.procurarteapi.mockFactory.musician.MusicianFactory;
 
 @SpringBootTest
-class ProcurarteApiApplicationTests {
+class ShowMusicianServiceTest {
 	
 	@Autowired
     private PostMusicianService postMusicianService;
@@ -22,19 +22,23 @@ class ProcurarteApiApplicationTests {
 	@Autowired
     private ShowMusicianService showMusicianService;
 
+	private String okMusician = "OK";
+
 	@Test
 	void musicianIsEqual() throws Exception {
 
-		Address address = new Address("rua", "sp", "00000-000", "09", "null");
-		Musician musicianPost = new Musician("idMock", "email@mock", "123", "Mock", "11999999999", "@moock", address, null, null, null);
-	
+		Musician musicianPost = MusicianFactory.MusicianGenerator(okMusician).generate();
 
 		postMusicianService.execute(musicianPost);
 
-		ShowMusicianRequestDto request = new ShowMusicianRequestDto("idMock"); 
+		ShowMusicianRequestDto request = new ShowMusicianRequestDto(musicianPost.getId()); 
 
 		ShowMusicianResponseDto response = showMusicianService.execute(request); 
 
-		assertThat(musicianPost == response.getMusician()).isTrue();
+		assertThat(musicianPost.getId().equals(response.getMusician().getId())).isTrue();
+		assertThat(musicianPost.getEmail().equals(response.getMusician().getEmail())).isTrue();
+		assertThat(musicianPost.getInstagramProfile().equals(response.getMusician().getInstagramProfile())).isTrue();
+		assertThat(musicianPost.getName().equals(response.getMusician().getName())).isTrue();
+		assertThat(musicianPost.getPhoneNumber().equals(response.getMusician().getPhoneNumber())).isTrue();
 	}
 }
