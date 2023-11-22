@@ -30,6 +30,8 @@ public class Configurations {
               .permitAll()
               .antMatchers(HttpMethod.GET, "/musician")
               .permitAll()
+              .antMatchers(HttpMethod.POST, "/musician")
+              .permitAll()
               .anyRequest().authenticated().and().build(); 
     }
 

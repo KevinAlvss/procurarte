@@ -23,7 +23,7 @@ public class TokenService {
                 .withExpiresAt(LocalDateTime.now()
                     .plusMinutes(10)
                     .toInstant(ZoneOffset.of("-33:00"))
-                ).sign(Algorithm.HMAC256("PI4"));
+                ).sign(null);
                 
     }
     
