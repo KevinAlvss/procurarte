@@ -9,7 +9,7 @@ public class MusicianOk implements IMusianMock{
     @Override
     public  Musician generate() {
         Address address = new Address("rua", "sp", "00000-000", "09", "null");
-		Musician musicianMock = new Musician("idMock", "email@mock", "123", "Mock", "11999999999", "@moock", address, null, null, null);
+		Musician musicianMock = new Musician("idMock", "email@mock", "123", "Mock", "11999999999", address, null, null, null);
     
         return musicianMock;
     }

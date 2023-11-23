@@ -37,7 +37,6 @@ class ShowMusicianServiceTest {
 
 		assertThat(musicianPost.getId().equals(response.getMusician().getId())).isTrue();
 		assertThat(musicianPost.getEmail().equals(response.getMusician().getEmail())).isTrue();
-		assertThat(musicianPost.getInstagramProfile().equals(response.getMusician().getInstagramProfile())).isTrue();
 		assertThat(musicianPost.getName().equals(response.getMusician().getName())).isTrue();
 		assertThat(musicianPost.getPhoneNumber().equals(response.getMusician().getPhoneNumber())).isTrue();
 	}

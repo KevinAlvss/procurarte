@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PortfolioRequestDto {
     private String musicianDescription;
+    private String instagramProfile;
     private String profilePhoto;
     private String thumbnail;
     private List<String> media;
