@@ -19,6 +19,9 @@ public class LoginService {
         try {
             Musician user = musicianRepository.findByEmail(request.getEmail());
 
+            if(user == null)
+                new Exception("Login ou senha invalidos");
+
             LoginResponseDto response = new LoginResponseDto(user.getEmail(), user.getPassword(), user.getId(), "token",
                     true);
 
