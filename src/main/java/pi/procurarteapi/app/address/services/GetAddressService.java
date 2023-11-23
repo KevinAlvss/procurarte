@@ -1,50 +1,48 @@
 package pi.procurarteapi.app.address.services;
 
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import pi.procurarteapi.app.address.dtos.GetAddress.GetAddressRequestDto;
-import pi.procurarteapi.app.address.dtos.GetAddress.GetAddressResponseDto;
+import pi.procurarteapi.app.address.dtos.GetAddressResponseDto;
 import pi.procurarteapi.app.address.interfaces.IGetAddressService;
-
+import pi.procurarteapi.infra.integrations.viacep.dtos.GetAddress.ViaCepGetAddressResponseDto;
+import pi.procurarteapi.infra.integrations.viacep.services.ViaCepGetAddressService;
 
 @Service
-public class GetAddressService implements IGetAddressService{
+public class GetAddressService implements IGetAddressService {
 
-    private String baseUrlViaCep = "https://viacep.com.br/ws/";
-    private String responseFormat = "json";
+    private ViaCepGetAddressService getAddressService;
+
+    public GetAddressService(ViaCepGetAddressService getAddressService) {
+        this.getAddressService = getAddressService;
+    }
 
     @Override
-    public GetAddressResponseDto execute(GetAddressRequestDto request) throws Exception {
-        
-        if(request.getCep() == null || request.getCep().trim() == "" ) {
-            throw new Exception("CEP does not informed.");
+    public GetAddressResponseDto execute(String cep) throws Exception {
+        Validate(cep);
+
+        ViaCepGetAddressResponseDto viaCepResponse = getAddressService.getAddress(cep);
+        GetAddressResponseDto response = ViaCepToGetAddressResponseDto(viaCepResponse);
+
+        return response;
+    }
+
+    private void Validate(String request) throws Exception {
+        if (request == null || request.trim().equals("")) {
+            throw new Exception("CEP not informed.");
         }
-
-        GetAddressResponseDto resp = getAddress(baseUrlViaCep + request.getCep() + "/" + responseFormat);
-
-        return resp;
     }
 
-    private GetAddressResponseDto getAddress (String url) throws Exception {
-        RestTemplate request = new RestTemplate();
-        ResponseEntity<?> address = request.getForEntity(url, GetAddressResponseDto.class);
+    private GetAddressResponseDto ViaCepToGetAddressResponseDto(ViaCepGetAddressResponseDto source) {
+        GetAddressResponseDto response = new GetAddressResponseDto();
+        
+        response.setCity(source.getLocalidade());
+        response.setComplement(source.getComplemento());
+        response.setPostalCode(source.getCep());
+        response.setStreet(source.getLogradouro());
+        response.setUf(source.getUf());
+        response.setDistrict(source.getBairro());
 
-        // TODO :: MELHORAR E FAZER FUNCIONAR VALIDAÇÕES
-
-        // if(address.getStatusCode() != HttpStatus.OK) {
-        //     throw new Exception("CEP does not exist.");
-        // }
-
-        // if(address.getBody() == null) {
-        //     throw new Exception("CEP does not exist (2).");
-        // }
-
-        return (GetAddressResponseDto) address.getBody();
+        return response;
     }
-    
+
 }

@@ -1,4 +1,4 @@
-package pi.procurarteapi.app.address.dtos.GetAddress;
+package pi.procurarteapi.infra.integrations.viacep.dtos.GetAddress;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAddressResponseDto {
+public class ViaCepGetAddressResponseDto {
     private String cep;
     private String logradouro;
     private String complemento;

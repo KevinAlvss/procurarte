@@ -1,8 +1,7 @@
 package pi.procurarteapi.app.address.interfaces;
 
-import pi.procurarteapi.app.address.dtos.GetAddress.GetAddressRequestDto;
-import pi.procurarteapi.app.address.dtos.GetAddress.GetAddressResponseDto;
+import pi.procurarteapi.app.address.dtos.GetAddressResponseDto;
 
 public interface IGetAddressService {
-    GetAddressResponseDto execute(GetAddressRequestDto request) throws Exception;
+    GetAddressResponseDto execute(String cep) throws Exception;
 }
