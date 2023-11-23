@@ -16,15 +16,16 @@ import pi.procurarteapi.infra.entities.Musician;
 public class TokenService {
 
     public String gererToken(Musician musician) {
+        
+        
         return JWT.create()
                 .withIssuer("Musico")
                 .withSubject(musician.getUsername())
                 .withClaim("id", musician.getId())
                 .withExpiresAt(LocalDateTime.now()
                     .plusMinutes(10)
-                    .toInstant(ZoneOffset.of("-33:00"))
-                ).sign(null);
-                
+                    .toInstant(ZoneOffset.of("-03:00"))
+                ).sign(Algorithm.HMAC256("secreta"));                
     }
     
 }

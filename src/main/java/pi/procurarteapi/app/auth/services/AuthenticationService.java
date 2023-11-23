@@ -15,8 +15,8 @@ public class AuthenticationService implements UserDetailsService{
     private IMusicianRepository musicianRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return musicianRepository.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return musicianRepository.findByEmail(email);
     }
     
 }
