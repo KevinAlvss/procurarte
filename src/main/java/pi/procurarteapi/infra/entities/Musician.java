@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AllArgsConstructor;
+
 @Document("musicians")
 public class Musician  implements UserDetails{
     @Id
@@ -19,7 +21,6 @@ public class Musician  implements UserDetails{
     private String password;
     private String name;
     private String phoneNumber;
-    private String instagramProfile;
     private Address address;
     private Portfolio portfolio;
 
@@ -29,14 +30,12 @@ public class Musician  implements UserDetails{
     @DBRef
     private List<MusicStyle> musicStyles;
 
-    public Musician(String id, String email, String password, String name, String phoneNumber,
-            String instagramProfile, Address address, Portfolio portfolio, List<Instrument> instruments, List<MusicStyle> musicStyles) {
+    public Musician(String id, String email, String password, String name, String phoneNumber, Address address, Portfolio portfolio, List<Instrument> instruments, List<MusicStyle> musicStyles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.instagramProfile = instagramProfile;
         this.address = address;
         this.portfolio = portfolio;
         this.instruments = instruments;
@@ -75,14 +74,6 @@ public class Musician  implements UserDetails{
         this.phoneNumber = phoneNumber;
     }
 
-    public String getInstagramProfile() {
-        return instagramProfile;
-    }
-
-    public void setInstagramProfile(String instagramProfile) {
-        this.instagramProfile = instagramProfile;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -115,7 +106,7 @@ public class Musician  implements UserDetails{
         this.musicStyles = musicStyles;
     }
 
-
+    @AllArgsConstructor
     public static class Address {
         private String street;
         private String state;
@@ -166,11 +157,16 @@ public class Musician  implements UserDetails{
 
     public static class Portfolio {
         private String musicianDescription;
+        private String instagramProfile;
         private String profilePhoto;
         private String thumbnail;
         private List<String> media;
-
+        
         private Portfolio() {
+        }
+        
+        public String getInstagramProfile() {
+            return instagramProfile;
         }
 
         public String getMusicianDescription() {
@@ -217,6 +213,11 @@ public class Musician  implements UserDetails{
     
             public Builder media(List<String> media) {
                 portfolio.media = media;
+                return this;
+            }
+
+            public Builder instagramProfile(String instagramProfile) {
+                portfolio.instagramProfile = instagramProfile;
                 return this;
             }
     

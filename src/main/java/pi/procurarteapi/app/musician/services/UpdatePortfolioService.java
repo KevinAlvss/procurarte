@@ -23,6 +23,8 @@ public class UpdatePortfolioService implements IUpdatePortfolioService {
     @Override
     public UpdatePortfolioResponseDto execute(UpdatePortfolioRequestDto request) throws Exception {
         try {
+            Validate(request);
+
             Musician musician = musicianRepository.findById(request.getId())
                     .orElseThrow(() -> new Exception("Musician Not Found"));
 
@@ -31,6 +33,7 @@ public class UpdatePortfolioService implements IUpdatePortfolioService {
                     .musicianDescription(request.getPortfolio().getMusicianDescription())
                     .profilePhoto(request.getPortfolio().getProfilePhoto())
                     .thumbnail(request.getPortfolio().getThumbnail())
+                    .instagramProfile(request.getPortfolio().getInstagramProfile())
                     .build();
 
             musician.setPortfolio(newPortfolio);
@@ -43,6 +46,12 @@ public class UpdatePortfolioService implements IUpdatePortfolioService {
             return response;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
+        }
+    }
+
+    private void Validate(UpdatePortfolioRequestDto request) throws Exception {
+        if (!request.getPortfolio().getInstagramProfile().startsWith("@")) {
+            throw new Exception("Instagram Profile is not valid.");
         }
     }
 
