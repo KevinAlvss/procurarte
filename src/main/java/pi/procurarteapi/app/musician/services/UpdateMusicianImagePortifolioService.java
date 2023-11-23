@@ -3,8 +3,8 @@ package pi.procurarteapi.app.musician.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.UpdateImagesPortifolioRequestDto;
-import pi.procurarteapi.app.musician.dtos.PostImagesPortifolio.UpdateImagesPortifolioResponseDto;
+import pi.procurarteapi.app.musician.dtos.UpdateImagesPortifolio.UpdateImagesPortifolioRequestDto;
+import pi.procurarteapi.app.musician.dtos.UpdateImagesPortifolio.UpdateImagesPortifolioResponseDto;
 import pi.procurarteapi.app.musician.interfaces.IUpdateMusicianImagePortifolioService;
 import pi.procurarteapi.infra.entities.Musician;
 import pi.procurarteapi.infra.entities.Musician.Portfolio;

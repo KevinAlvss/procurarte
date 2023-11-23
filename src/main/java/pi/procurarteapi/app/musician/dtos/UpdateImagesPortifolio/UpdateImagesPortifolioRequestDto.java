@@ -1,4 +1,4 @@
-package pi.procurarteapi.app.musician.dtos.PostImagesPortifolio;
+package pi.procurarteapi.app.musician.dtos.UpdateImagesPortifolio;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
