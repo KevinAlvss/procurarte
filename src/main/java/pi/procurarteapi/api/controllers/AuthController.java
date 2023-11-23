@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import pi.procurarteapi.app.auth.dtos.LoginRequestDto;
-import pi.procurarteapi.app.auth.services.LoginService;
 import pi.procurarteapi.app.auth.services.TokenService;
 import pi.procurarteapi.infra.entities.Musician;
 
@@ -23,9 +22,6 @@ import pi.procurarteapi.infra.entities.Musician;
 @Api(value = "Auth")
 @RequestMapping(value = "/auth")
 public class AuthController {
-
-    @Autowired
-    private LoginService loginService;
 
     @Autowired
     private AuthenticationManager authManager;
