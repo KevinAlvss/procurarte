@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianRequestDto;
+import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
@@ -37,14 +39,13 @@ import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRespons
 import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianImagePortifolioService;
-import pi.procurarteapi.app.musician.services.PostMusicianService;
+import pi.procurarteapi.app.musician.services.CreateMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianInstrumentsService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianMusicStylesServices;
 import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
-import pi.procurarteapi.infra.entities.Musician;
 
 @RestController
 @CrossOrigin("*")
@@ -80,7 +81,7 @@ public class MusicianController {
     private UpdateMusicianImagePortifolioService updateMusicianImagePortifolioService;
 
     @Autowired
-    private PostMusicianService postMusicianService;
+    private CreateMusicianService createMusicianService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -109,11 +110,12 @@ public class MusicianController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> postMusician(@RequestBody Musician musician){ 
+    public ResponseEntity<?> postMusician(@RequestBody CreateMusicianRequestDto musician){ 
         try {
             
-                Musician newMusician = postMusicianService.execute(musician);
-                return ResponseEntity.status(HttpStatus.OK).body(newMusician);
+            CreateMusicianResponseDto newMusician = createMusicianService.execute(musician);
+            
+            return ResponseEntity.status(HttpStatus.OK).body(newMusician);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

@@ -1,15 +1,20 @@
 package pi.procurarteapi.mockFactory.musician.musicianMockTypes;
 
-import pi.procurarteapi.infra.entities.Musician;
-import pi.procurarteapi.infra.entities.Musician.Address;
+import pi.procurarteapi.app.musician.dtos.Common.AddressDto;
+import pi.procurarteapi.app.musician.dtos.Common.MusicianDto;
 import pi.procurarteapi.mockFactory.musician.IMusianMock;
 
 public class MusicianFail implements IMusianMock{
 
     @Override
-    public Musician generate() {
-        Address address = new Address("rua", "sp", "00000-000", "09", "null");
-		Musician musicianMock = new Musician("idMock", "email@mock", "123", "Mock", "11999999999", address, null, null, null);
+    public MusicianDto generate() {
+        AddressDto address = new AddressDto("rua", "sp", "00000-000", "09", "null");
+		
+        MusicianDto musicianMock = new MusicianDto();
+        musicianMock.setEmail("failedmock");
+        musicianMock.setCpf("failedmock");
+        musicianMock.setName("failedName");
+        musicianMock.setAddress(address);
     
         return musicianMock;
     }
