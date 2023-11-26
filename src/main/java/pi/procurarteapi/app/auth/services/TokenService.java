@@ -23,9 +23,15 @@ public class TokenService {
                 .withSubject(musician.getUsername())
                 .withClaim("id", musician.getId())
                 .withExpiresAt(LocalDateTime.now()
-                    .plusMinutes(10)
+                    .plusMinutes(30)
+                    //.plusSeconds(30)
                     .toInstant(ZoneOffset.of("-03:00"))
                 ).sign(Algorithm.HMAC256("secreta"));                
+    }
+
+    public String getSubject(String token){
+        return JWT.require(Algorithm.HMAC256("secreta"))
+        .withIssuer("Musico").build().verify(token).getSubject();
     }
     
 }

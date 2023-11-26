@@ -12,14 +12,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class Configurations {
 
-    @Autowired
+    //@Autowired
     //private
     
+    @Autowired
+    private FilterToken filter;
+
     //Faz a liberação das paginas que podem ser acessadas com ou sem autenticação
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
@@ -30,9 +34,19 @@ public class Configurations {
               .permitAll()
               .antMatchers(HttpMethod.GET, "/musician")
               .permitAll()
+              .antMatchers(HttpMethod.GET, "/musician/{id}")
+              .permitAll()
               .antMatchers(HttpMethod.POST, "/musician")
               .permitAll()
-              .anyRequest().authenticated().and().build(); 
+              .antMatchers(HttpMethod.GET, "/musicstyle")
+              .permitAll()
+              .antMatchers(HttpMethod.GET, "/instrument")
+              .permitAll()
+              .anyRequest().authenticated()
+              .and().addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class)
+              .build(); 
+
+              
     }
 
     @Bean
