@@ -9,8 +9,8 @@ import pi.procurarteapi.infra.repositories.IMusicianRepository;
 
 @Service
 public class LoginService {
-    private IMusicianRepository musicianRepository;
 
+    private IMusicianRepository musicianRepository;
     public LoginService(IMusicianRepository musicianRepository) {
         this.musicianRepository = musicianRepository;
     }

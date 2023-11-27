@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pi.procurarteapi.app.musician.common.RegexPatterns;
@@ -84,6 +86,10 @@ public class CreateMusicianService implements ICreateMusicianService {
         
         Musician musician = new Musician(dto.getEmail(), dto.getPassword(), dto.getName(), dto.getPhoneNumber(), dto.getCpf(),
                 address, portfolio);
+
+        PasswordEncoder passEncoder = new BCryptPasswordEncoder();
+        String criptoPass = passEncoder.encode(musician.getPassword());
+        musician.setPassword(criptoPass);
 
         return musician;
     }
