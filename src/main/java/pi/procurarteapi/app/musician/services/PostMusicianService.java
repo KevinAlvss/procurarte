@@ -1,6 +1,9 @@
 package pi.procurarteapi.app.musician.services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pi.procurarteapi.app.musician.interfaces.IPostMusicianService;
@@ -20,8 +23,15 @@ public class PostMusicianService implements IPostMusicianService{
     @Override
     public Musician execute(Musician musician) throws Exception {
         try {
-             Musician saveMusician = musicianRepository.save(musician);
-             return saveMusician;    
+
+            
+            PasswordEncoder passEncoder = new BCryptPasswordEncoder();
+            String criptoPass = passEncoder.encode(musician.getPassword());
+            musician.setPassword(criptoPass);
+
+            Musician saveMusician = musicianRepository.save(musician);
+                 return saveMusician; 
+                
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
