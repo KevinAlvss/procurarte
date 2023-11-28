@@ -16,10 +16,6 @@ public class UpdatePortfolioService implements IUpdatePortfolioService {
     @Autowired
     private IMusicianRepository musicianRepository;
 
-    public UpdatePortfolioService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
     @Override
     public UpdatePortfolioResponseDto execute(UpdatePortfolioRequestDto request) throws Exception {
         try {

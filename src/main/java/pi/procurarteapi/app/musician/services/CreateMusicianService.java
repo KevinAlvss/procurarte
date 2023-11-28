@@ -40,10 +40,6 @@ public class CreateMusicianService implements ICreateMusicianService {
     private static final Pattern emailRegexPattern = Pattern.compile(RegexPatterns.EmailValidator);
     private static final Pattern cpfRegexPattern = Pattern.compile(RegexPatterns.CpfValidator);
 
-    public CreateMusicianService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
     @Override
     public CreateMusicianResponseDto execute(CreateMusicianRequestDto request) throws Exception {
         try {

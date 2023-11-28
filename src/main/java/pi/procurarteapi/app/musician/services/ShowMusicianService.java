@@ -14,11 +14,7 @@ public class ShowMusicianService implements IShowMusicianService {
 
     @Autowired
     private IMusicianRepository musicianRepository;
-
-    public ShowMusicianService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
+    
     @Override
     public ShowMusicianResponseDto execute(ShowMusicianRequestDto request) throws Exception {
         try {

@@ -15,10 +15,6 @@ public class ListMusicianImagesService implements IListMusicianImagesService {
     @Autowired
     private IMusicianRepository musicianRepository;
 
-    public ListMusicianImagesService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
     @Override
     public ListMusicianImagesResponseDto execute(ListMusicianImagesRequestDto request) throws Exception {
         try {

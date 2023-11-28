@@ -17,10 +17,6 @@ public class ShowWhatsappLinkService implements IShowWhatsappLinkService{
 
     private String whatsAppLinkBaseUrl = "https://wa.me/";
 
-    public ShowWhatsappLinkService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
     @Override
     public ShowWhatsappLinkResponseDto execute(ShowWhatsappLinkRequestDto request) throws Exception {
         try {
