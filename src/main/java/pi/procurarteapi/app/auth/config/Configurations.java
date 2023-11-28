@@ -39,6 +39,10 @@ public class Configurations {
                         .permitAll()
                         .antMatchers(HttpMethod.GET, "/instrument")
                         .permitAll()
+                        .antMatchers(HttpMethod.GET, "/musician/{id}/portfolio")
+                        .permitAll()
+                        .antMatchers(HttpMethod.GET, "/musician/{id}/images")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
