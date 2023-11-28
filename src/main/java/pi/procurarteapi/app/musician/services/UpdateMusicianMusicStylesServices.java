@@ -24,12 +24,6 @@ public class UpdateMusicianMusicStylesServices implements IUpdateMusicianMusicSt
     @Autowired
     private IMusicStyleRepository musicStyleRepository;
 
-    public UpdateMusicianMusicStylesServices(IMusicianRepository musicianRepository,
-            IMusicStyleRepository musicStyleRepository) {
-        this.musicianRepository = musicianRepository;
-        this.musicStyleRepository = musicStyleRepository;
-    }
-
     @Override
     public UpdateMusicianMusicStylesResponseDto execute(UpdateMusicianMusicStylesRequestDto request) throws Exception {
         try {

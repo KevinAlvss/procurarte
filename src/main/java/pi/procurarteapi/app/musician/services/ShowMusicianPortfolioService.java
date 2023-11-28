@@ -15,10 +15,6 @@ public class ShowMusicianPortfolioService implements IShowMusicianPortfolioServi
     @Autowired
     private IMusicianRepository musicianRepository;
 
-    public ShowMusicianPortfolioService(IMusicianRepository musicianRepository) {
-        this.musicianRepository = musicianRepository;
-    }
-
     @Override
     public ShowMusicianPortfolioResponseDto execute(ShowMusicianPortfolioRequestDto request) throws Exception {
         try {

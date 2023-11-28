@@ -24,12 +24,6 @@ public class UpdateMusicianInstrumentsService implements IUpdateMusicianInstrume
     @Autowired
     private IInstrumentRepository instrumentRepository;
 
-    public UpdateMusicianInstrumentsService(IMusicianRepository musicianRepository,
-            IInstrumentRepository instrumentRepository) {
-        this.musicianRepository = musicianRepository;
-        this.instrumentRepository = instrumentRepository;
-    }
-
     @Override
     public UpdateMusicianInstrumentsResponseDto execute(UpdateMusicianInstrumentsRequestDto request) throws Exception {
         try {

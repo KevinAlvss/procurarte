@@ -16,10 +16,6 @@ public class ListMusicStyleService implements IListMusicStyleService {
     @Autowired
     private IMusicStyleRepository musicStyleRepository;
 
-    public ListMusicStyleService(IMusicStyleRepository musicStyleRepository) {
-        this.musicStyleRepository = musicStyleRepository;
-    }
-
     @Override
     public ListMusicStyleResponseDto execute() throws Exception {
         try {

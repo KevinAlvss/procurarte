@@ -16,10 +16,6 @@ public class ListInstrumentService implements IListInstrumentService {
     @Autowired
     private IInstrumentRepository instrumentRepository;
 
-    public ListInstrumentService(IInstrumentRepository instrumentRepository) {
-        this.instrumentRepository = instrumentRepository;
-    }
-
     @Override
     public ListInstrumentResponseDto execute() throws Exception {
         try {
