@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianRequestDto;
 import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianResponseDto;
+import pi.procurarteapi.app.musician.dtos.DeleteMusician.DeleteMusicianRequestDto;
+import pi.procurarteapi.app.musician.dtos.DeleteMusician.DeleteMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusician.ListMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesRequestDto;
 import pi.procurarteapi.app.musician.dtos.ListMusicianImages.ListMusicianImagesResponseDto;
@@ -40,6 +43,7 @@ import pi.procurarteapi.app.musician.services.ListMusicianImagesService;
 import pi.procurarteapi.app.musician.services.ListMusicianService;
 import pi.procurarteapi.app.musician.services.UpdateMusicianImagePortifolioService;
 import pi.procurarteapi.app.musician.services.CreateMusicianService;
+import pi.procurarteapi.app.musician.services.DeleteMusicianService;
 import pi.procurarteapi.app.musician.services.ShowMusicianPortfolioService;
 import pi.procurarteapi.app.musician.services.ShowMusicianService;
 import pi.procurarteapi.app.musician.services.ShowWhatsappLinkService;
@@ -82,6 +86,9 @@ public class MusicianController {
 
     @Autowired
     private CreateMusicianService createMusicianService;
+
+    @Autowired
+    private DeleteMusicianService deleteMusicianService;
 
     @GetMapping
     public ResponseEntity<?> list() throws Exception {
@@ -208,6 +215,16 @@ public class MusicianController {
 
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteMusician(@PathVariable String id){
+        try {
+                DeleteMusicianResponseDto response = deleteMusicianService.execute(new DeleteMusicianRequestDto(id));
+                return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
