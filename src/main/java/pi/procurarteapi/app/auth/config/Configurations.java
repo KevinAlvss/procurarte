@@ -18,35 +18,31 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class Configurations {
 
-    //@Autowired
-    //private
-    
     @Autowired
     private FilterToken filter;
 
-    //Faz a liberação das paginas que podem ser acessadas com ou sem autenticação
+    // Faz a liberação das paginas que podem ser acessadas com ou sem autenticação
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-       return http.csrf().disable()
-              .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-              .and().authorizeRequests()
-              .antMatchers(HttpMethod.POST,"/auth")
-              .permitAll()
-              .antMatchers(HttpMethod.GET, "/musician")
-              .permitAll()
-              .antMatchers(HttpMethod.GET, "/musician/{id}")
-              .permitAll()
-              .antMatchers(HttpMethod.POST, "/musician")
-              .permitAll()
-              .antMatchers(HttpMethod.GET, "/musicstyle")
-              .permitAll()
-              .antMatchers(HttpMethod.GET, "/instrument")
-              .permitAll()
-              .anyRequest().authenticated()
-              .and().addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class)
-              .build(); 
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests(requests -> requests
+                        .antMatchers(HttpMethod.POST, "/auth")
+                        .permitAll()
+                        .antMatchers(HttpMethod.GET, "/musician")
+                        .permitAll()
+                        .antMatchers(HttpMethod.GET, "/musician/{id}")
+                        .permitAll()
+                        .antMatchers(HttpMethod.POST, "/musician")
+                        .permitAll()
+                        .antMatchers(HttpMethod.GET, "/musicstyle")
+                        .permitAll()
+                        .antMatchers(HttpMethod.GET, "/instrument")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .build();
 
-              
     }
 
     @Bean
@@ -55,8 +51,8 @@ public class Configurations {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-       return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

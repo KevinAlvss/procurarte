@@ -22,18 +22,18 @@ import pi.procurarteapi.mockFactory.musician.MusicianFactory;
 
 @SpringBootTest
 class LoginServiceTest {
-	
-	@Autowired
-    private CreateMusicianService postMusicianService;
 
 	@Autowired
-    private ShowMusicianService showMusicianService;
+	private CreateMusicianService postMusicianService;
 
 	@Autowired
-    private IMusicianRepository musicianRepository;
+	private ShowMusicianService showMusicianService;
 
-    @Autowired
-    private LoginService loginService;
+	@Autowired
+	private IMusicianRepository musicianRepository;
+
+	@Autowired
+	private LoginService loginService;
 
 	private String okMusician = "OK";
 
@@ -42,13 +42,14 @@ class LoginServiceTest {
 
 		MusicianDto musicianPost = MusicianFactory.MusicianGenerator(okMusician).generate();
 
-		CreateMusicianResponseDto musicianResponse = postMusicianService.execute(new CreateMusicianRequestDto(musicianPost));
+		CreateMusicianResponseDto musicianResponse = postMusicianService
+				.execute(new CreateMusicianRequestDto(musicianPost));
 
-        LoginRequestDto loginRequest = new LoginRequestDto(musicianPost.getEmail(),musicianPost.getPassword());
-        LoginResponseDto login =  loginService.execute(loginRequest);
+		LoginRequestDto loginRequest = new LoginRequestDto(musicianPost.getEmail(), musicianPost.getPassword());
+		LoginResponseDto login = loginService.execute(loginRequest);
 
-        ShowMusicianRequestDto request = new ShowMusicianRequestDto(login.getUserId()); 
-		ShowMusicianResponseDto response = showMusicianService.execute(request); 
+		ShowMusicianRequestDto request = new ShowMusicianRequestDto(login.getUserId());
+		ShowMusicianResponseDto response = showMusicianService.execute(request);
 
 		assertThat(musicianPost.getEmail().equals(response.getMusician().getEmail())).isTrue();
 		assertThat(musicianPost.getName().equals(response.getMusician().getName())).isTrue();
@@ -57,16 +58,16 @@ class LoginServiceTest {
 		musicianRepository.delete(musicianResponse.getMusician());
 	}
 
-    @Test
+	@Test
 	void loginIsInvalid() throws Exception {
 
-        LoginRequestDto loginRequest = new LoginRequestDto("InvalidEmail","InvalidPassword");
+		LoginRequestDto loginRequest = new LoginRequestDto("InvalidEmail", "InvalidPassword");
 
-         Throwable exception = assertThrows(Exception.class, () -> {
-		        loginService.execute(loginRequest); 
-        });
+		Throwable exception = assertThrows(Exception.class, () -> {
+			loginService.execute(loginRequest);
+		});
 
 		assertThat(exception.getMessage()).isEqualTo("Login ou senha invalidos");
 
-    }
+	}
 }

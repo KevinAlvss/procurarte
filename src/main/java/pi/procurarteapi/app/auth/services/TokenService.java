@@ -1,7 +1,5 @@
 package pi.procurarteapi.app.auth.services;
 
-
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -15,23 +13,21 @@ import pi.procurarteapi.infra.entities.Musician;
 @Service
 public class TokenService {
 
-    public String gererToken(Musician musician) {
-        
-        
+    public String generateToken(Musician musician) {
+
         return JWT.create()
                 .withIssuer("Musico")
                 .withSubject(musician.getUsername())
                 .withClaim("id", musician.getId())
                 .withExpiresAt(LocalDateTime.now()
-                    .plusMinutes(30)
-                    //.plusSeconds(30)
-                    .toInstant(ZoneOffset.of("-03:00"))
-                ).sign(Algorithm.HMAC256("secreta"));                
+                        .plusMinutes(30)
+                        .toInstant(ZoneOffset.of("-03:00")))
+                .sign(Algorithm.HMAC256("secreta"));
     }
 
-    public String getSubject(String token){
+    public String getSubject(String token) {
         return JWT.require(Algorithm.HMAC256("secreta"))
-        .withIssuer("Musico").build().verify(token).getSubject();
+                .withIssuer("Musico").build().verify(token).getSubject();
     }
-    
+
 }

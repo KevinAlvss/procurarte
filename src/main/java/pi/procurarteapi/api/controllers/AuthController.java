@@ -3,9 +3,6 @@ package pi.procurarteapi.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import pi.procurarteapi.app.auth.dtos.LoginRequestDto;
-import pi.procurarteapi.app.auth.services.TokenService;
-import pi.procurarteapi.infra.entities.Musician;
+import pi.procurarteapi.app.auth.dtos.LoginResponseDto;
+import pi.procurarteapi.app.auth.services.LoginService;
 
 @RestController
 @CrossOrigin("*")
@@ -24,30 +21,18 @@ import pi.procurarteapi.infra.entities.Musician;
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authManager;
-
-    @Autowired
-    private TokenService tokenService;
+    private LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto request) throws Exception {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto request) throws Exception {
         try {
 
-            UsernamePasswordAuthenticationToken usetAuthToken = 
-            new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+            LoginResponseDto response = loginService.execute(request);
 
+            return ResponseEntity.status(HttpStatus.OK).body(response);
 
-            Authentication auth = this.authManager.authenticate(usetAuthToken);
- 
-            var musician = (Musician)auth.getPrincipal();
-            String token = tokenService.gererToken(musician);
-
-           // LoginResponseDto response = loginService.execute(request);
-           return ResponseEntity.status(HttpStatus.OK).body(token);
-
-       
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage()); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
 
     }
