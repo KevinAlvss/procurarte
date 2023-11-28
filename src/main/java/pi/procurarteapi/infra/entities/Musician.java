@@ -21,6 +21,8 @@ public class Musician  implements UserDetails{
     private String password;
     private String name;
     private String phoneNumber;
+    private String cpf;
+
     private Address address;
     private Portfolio portfolio;
 
@@ -30,16 +32,14 @@ public class Musician  implements UserDetails{
     @DBRef
     private List<MusicStyle> musicStyles;
 
-    public Musician(String id, String email, String password, String name, String phoneNumber, Address address, Portfolio portfolio, List<Instrument> instruments, List<MusicStyle> musicStyles) {
-        this.id = id;
+    public Musician(String email, String password, String name, String phoneNumber, String cpf, Address address, Portfolio portfolio) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.portfolio = portfolio;
-        this.instruments = instruments;
-        this.musicStyles = musicStyles;
+        this.cpf = cpf;
     }
 
     public String getId() {
@@ -72,6 +72,14 @@ public class Musician  implements UserDetails{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Address getAddress() {

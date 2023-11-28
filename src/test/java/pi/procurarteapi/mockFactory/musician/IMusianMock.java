@@ -1,7 +1,7 @@
 package pi.procurarteapi.mockFactory.musician;
 
-import pi.procurarteapi.infra.entities.Musician;
+import pi.procurarteapi.app.musician.dtos.Common.MusicianDto;
 
 public interface IMusianMock {
-    Musician generate(); 
+    MusicianDto generate(); 
 }

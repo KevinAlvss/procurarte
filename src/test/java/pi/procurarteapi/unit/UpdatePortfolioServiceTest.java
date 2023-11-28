@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import pi.procurarteapi.app.musician.dtos.Common.MusicianDto;
+import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianRequestDto;
+import pi.procurarteapi.app.musician.dtos.CreateMusician.CreateMusicianResponseDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.PortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioRequestDto;
 import pi.procurarteapi.app.musician.dtos.UpdatePortfolio.UpdatePortfolioResponseDto;
-import pi.procurarteapi.app.musician.services.PostMusicianService;
+import pi.procurarteapi.app.musician.services.CreateMusicianService;
 import pi.procurarteapi.app.musician.services.UpdatePortfolioService;
-import pi.procurarteapi.infra.entities.Musician;
 import pi.procurarteapi.infra.entities.Musician.Portfolio;
 import pi.procurarteapi.infra.repositories.IMusicianRepository;
 import pi.procurarteapi.mockFactory.musician.MusicianFactory;
@@ -27,7 +29,7 @@ public class UpdatePortfolioServiceTest {
     private UpdatePortfolioService updatePortfolioService;
 
     @Autowired
-    private PostMusicianService postMusicianService;
+    private CreateMusicianService postMusicianService;
 
     @Autowired
     private IMusicianRepository musicianRepository;
@@ -37,13 +39,13 @@ public class UpdatePortfolioServiceTest {
     @Test
     void executeShouldThrowInstagramNotValidError() throws Exception {
         // Given
-        Musician newMusician = MusicianFactory.MusicianGenerator(okMusician).generate();
+        MusicianDto newMusician = MusicianFactory.MusicianGenerator(okMusician).generate();
 
-        postMusicianService.execute(newMusician);
+        CreateMusicianResponseDto musicianResponse = postMusicianService.execute(new CreateMusicianRequestDto(newMusician));
 
         UpdatePortfolioRequestDto request = new UpdatePortfolioRequestDto();
         PortfolioRequestDto portfolio = new PortfolioRequestDto();
-        request.setId(newMusician.getId());
+        request.setId(musicianResponse.getMusician().getId());
 
         portfolio.setInstagramProfile("invalid");
         request.setPortfolio(portfolio);
@@ -56,19 +58,19 @@ public class UpdatePortfolioServiceTest {
         // Then
         assertThat(exception.getMessage()).isEqualTo("Instagram Profile is not valid.");
 
-        musicianRepository.delete(newMusician);
+        musicianRepository.delete(musicianResponse.getMusician());
     }
 
     @Test
     void executeShouldSucceed() throws Exception {
         // Given
-        Musician newMusician = MusicianFactory.MusicianGenerator(okMusician).generate();
+        MusicianDto newMusician = MusicianFactory.MusicianGenerator(okMusician).generate();
 
-        postMusicianService.execute(newMusician);
+        CreateMusicianResponseDto musicianResponse = postMusicianService.execute(new CreateMusicianRequestDto(newMusician));
 
         UpdatePortfolioRequestDto request = new UpdatePortfolioRequestDto();
         PortfolioRequestDto portfolio = generatePortfolioRequestDto();
-        request.setId(newMusician.getId());
+        request.setId(musicianResponse.getMusician().getId());
         request.setPortfolio(portfolio);
 
         // When
@@ -83,7 +85,7 @@ public class UpdatePortfolioServiceTest {
         assertThat(updatedPortfolio.getProfilePhoto()).isEqualTo(request.getPortfolio().getProfilePhoto());
         assertThat(updatedPortfolio.getThumbnail()).isEqualTo(request.getPortfolio().getThumbnail());
 
-        musicianRepository.delete(newMusician);
+        musicianRepository.delete(musicianResponse.getMusician());
     }
 
     private PortfolioRequestDto generatePortfolioRequestDto(){
