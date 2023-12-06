@@ -24,7 +24,7 @@ public class Configurations {
     // Faz a liberação das paginas que podem ser acessadas com ou sem autenticação
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http.cors().and().csrf(csrf -> csrf.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(requests -> requests
                         .antMatchers(HttpMethod.POST, "/auth")
